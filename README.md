@@ -53,7 +53,7 @@ git pull
 _Baixa todos os arquivos pro seu PC, atualizando os códigos dentro do seu PC baseado no que tinha dentro do repositório_
 
 
-_Para mais exemplos, consulte o [Mestre Zanetti][zanetti]._ 
+_Para mais exemplos, consulte o [Mestre Zanetti]
 
 
 
@@ -84,7 +84,7 @@ Leuryssom Nystrom, Lucas Gomes, Rafael Perottoni
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
 [wiki]: https://github.com/seunome/seuprojeto/wiki
- >>>>>>> dc79e7dd93407a7e806ad5b4cac7b7d7c189d605 
+ 
 
 =======
 
