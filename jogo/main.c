@@ -33,7 +33,7 @@ void allegro()
     {
         printf("Não foi possível executar o mouse.\n");
     }
-      al_init_image_addon();
+
 }
 
 void finalizar_allegro()
@@ -54,12 +54,16 @@ int main(int argc, char **argv)
 //acentuação
     setlocale(LC_ALL,"");
 
+//iniciando allegro
+    allegro();
 
 //criando uma janela
     display = al_create_display(800, 450);
+    al_init_image_addon();
 
-//criando imagem de capa
-allegro();
+
+
+//criando foto de capa
 
     capa = al_load_bitmap("imagens/landscape.bmp");
 
@@ -70,6 +74,9 @@ allegro();
     al_draw_bitmap(capa,0,0,0);
     al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
     al_rest(10.0);
+
+    finalizar_allegro();
+
 
     return 0;
 }
