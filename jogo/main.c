@@ -6,6 +6,8 @@
 #include <locale.h>
 
 //Variáveis criadas quando houver necessidade
+ALLEGRO_EVENT_QUEUE *fila = NULL;
+ALLEGRO_TIMER *timer = NULL;
 
 
 //variáveis de imagens
@@ -33,9 +35,26 @@ void allegro()
     {
         printf("Não foi possível executar o mouse.\n");
     }
-
+    //criando uma janela
+    display = al_create_display(800, 450);
+    al_init_image_addon();
 }
 
+void tela_de_carregamento()
+{
+
+}
+void fundo()
+{
+    capa = al_load_bitmap("imagens/landscape.bmp");
+
+    if (!capa)
+    {
+        printf("Erro em carregar imagens/landscape.bmp\n");
+    }
+    al_draw_bitmap(capa,0,0,0);
+    al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
+}
 void finalizar_allegro()
 {
     al_destroy_display(display);
@@ -57,22 +76,12 @@ int main(int argc, char **argv)
 //iniciando allegro
     allegro();
 
-//criando uma janela
-    display = al_create_display(800, 450);
-    al_init_image_addon();
-
+//criando tela de carregamento
 
 
 //criando foto de capa
+    fundo();
 
-    capa = al_load_bitmap("imagens/landscape.bmp");
-
-    if (!capa)
-    {
-        printf("Erro em carregar imagens/landscape.bmp\n");
-    }
-    al_draw_bitmap(capa,0,0,0);
-    al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
     al_rest(10.0);
 
     finalizar_allegro();
