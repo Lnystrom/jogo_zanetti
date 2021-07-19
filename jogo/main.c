@@ -5,6 +5,7 @@
 #include <allegro5/allegro_image.h>
 #include <locale.h>
 
+
 //Variáveis criadas quando houver necessidade
 ALLEGRO_EVENT_QUEUE *fila = NULL;
 ALLEGRO_TIMER *timer = NULL;
@@ -13,6 +14,9 @@ ALLEGRO_TIMER *timer = NULL;
 //variáveis de imagens
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_BITMAP *capa = NULL;
+ALLEGRO_BITMAP *carregamento = NULL;
+
+//tela de carregamento
 
 //usado para resolver um bug
 void * __gxx_personality_v0=0;
@@ -42,8 +46,25 @@ void allegro()
 
 void tela_de_carregamento()
 {
+    int contador;
+    int quadros = 79;
+    char frame[100];
+    for (contador = 1; contador < quadros; contador++)
+    {
+        sprintf(frame, "imagens/frames/frame_%.2d_delay-0.1s.gif", contador);
+        // ("%s\n", frame); --> ver se está funcionado printf
+        carregamento = al_load_bitmap(frame);
+        if (!carregamento)
+        {
+            printf("Erro em carregar %s\n", frame);
+        }
+        al_draw_bitmap(carregamento,0,0,0);
+        al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
+        al_rest(0.1);
+    }
 
 }
+
 void fundo()
 {
     capa = al_load_bitmap("imagens/landscape.bmp");
@@ -62,22 +83,19 @@ void finalizar_allegro()
     al_destroy_bitmap(capa);
 }
 
-/*void desenhar()
-{
-
-}
-*/
-
 int main(int argc, char **argv)
 {
+
 //acentuação
     setlocale(LC_ALL,"");
 
+
 //iniciando allegro
     allegro();
+    al_rest(5.0);
 
 //criando tela de carregamento
-
+    tela_de_carregamento();
 
 //criando foto de capa
     fundo();
