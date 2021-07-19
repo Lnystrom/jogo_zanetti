@@ -14,9 +14,10 @@ ALLEGRO_TIMER *timer = NULL;
 //variáveis de imagens
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_BITMAP *capa = NULL;
-ALLEGRO_BITMAP *carregamento = NULL;
+
 
 //tela de carregamento
+ALLEGRO_BITMAP *carregamento = NULL;
 
 //usado para resolver um bug
 void * __gxx_personality_v0=0;
@@ -58,7 +59,7 @@ void tela_de_carregamento()
         {
             printf("Erro em carregar %s\n", frame);
         }
-        al_draw_bitmap(carregamento,0,0,0);
+        al_draw_bitmap(carregamento,300,200,0);
         al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
         al_rest(0.1);
     }
@@ -67,6 +68,7 @@ void tela_de_carregamento()
 
 void fundo()
 {
+
     capa = al_load_bitmap("imagens/landscape.bmp");
 
     if (!capa)
