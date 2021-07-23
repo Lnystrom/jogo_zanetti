@@ -29,10 +29,7 @@ void allegro()
     {
         printf("Não foi possível executar o allegro.\n");
     }
-    if (!al_install_keyboard())
-    {
-        printf("Não foi possível executar o teclado.\n");
-    }
+
     if (!al_install_mouse())
     {
         printf("Não foi possível executar o mouse.\n");
@@ -81,18 +78,25 @@ void audio_menu()
 }
 void fundo()
 {
+
     ALLEGRO_KEYBOARD_STATE teclado;
+
+    audio_menu();
+    capa = al_load_bitmap("imagens/landscape.bmp");
+    if (!capa)
+    {
+        printf("Erro em carregar imagens/landscape.bmp\n");
+    }
+     if (!al_install_keyboard())
+    {
+        printf("Não foi possível executar o teclado.\n");
+    }
     while(1)
     {
+        al_get_keyboard_state(&teclado);
         if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE))
         {
             break;
-        }
-        audio_menu();
-        capa = al_load_bitmap("imagens/landscape.bmp");
-        if (!capa)
-        {
-            printf("Erro em carregar imagens/landscape.bmp\n");
         }
         al_draw_bitmap(capa, 0, 0, 0);
         al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
