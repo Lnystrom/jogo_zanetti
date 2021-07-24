@@ -1,4 +1,5 @@
 //roubado do zanetti
+//cu de coelho
 
 #include <locale.h>
 #include <stdio.h>
