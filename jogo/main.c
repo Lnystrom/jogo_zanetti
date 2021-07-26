@@ -77,6 +77,10 @@ void audio_menu()
     tema_sample = al_load_sample("audio/tema.wav");
     al_play_sample(tema_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP,0);
 }
+void jogo()
+{
+    printf("batata");
+}
 void fundo()
 {
 
@@ -88,19 +92,23 @@ void fundo()
     {
         printf("Erro em carregar imagens/landscape.bmp\n");
     }
-     if (!al_install_keyboard())
+    if (!al_install_keyboard())
     {
         printf("Não foi possível executar o teclado.\n");
     }
     while(1)
     {
         al_get_keyboard_state(&teclado);
+        al_draw_bitmap(capa, 0, 0, 0);
+        al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
+        if (al_key_down(&teclado, ALLEGRO_KEY_ENTER))
+        {
+            jogo();
+        }
         if (al_key_down(&teclado, ALLEGRO_KEY_ESCAPE))
         {
             break;
         }
-        al_draw_bitmap(capa, 0, 0, 0);
-        al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
     }
 
 }
@@ -125,8 +133,6 @@ int main(int argc, char **argv)
 
     //criando foto de capa
     fundo();
-
-    al_rest(10.0);
 
     finalizar_allegro();
 
