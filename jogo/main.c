@@ -7,6 +7,8 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
 #include "allegro5/allegro_acodec.h"
+#include "allegro5/allegro_font.h"
+#include "allegro5/allegro_ttf.h"
 
 //Variáveis criadas quando houver necessidade
 ALLEGRO_EVENT_QUEUE *fila = NULL;
@@ -46,6 +48,8 @@ void allegro()
     al_set_window_position(display, 200, 200);
     al_set_window_title(display, "O bêbado e o equilibrista");
     al_init_image_addon();
+    al_init_font_addon();
+    al_init_ttf_addon();
 }
 
 void tela_de_carregamento()
@@ -98,9 +102,15 @@ void fundo()
     }
     while(1)
     {
+
         al_get_keyboard_state(&teclado);
         al_draw_bitmap(capa, 0, 0, 0);
+          ALLEGRO_FONT * fonte24 = al_load_ttf_font("fonte.ttf",16,0);
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+        al_draw_textf(fonte24, al_map_rgb(16, 6, 159), 180, 225, 0, "Pressione Enter Para Continuar ");
         al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
+
+
         if (al_key_down(&teclado, ALLEGRO_KEY_ENTER))
         {
             jogo();
