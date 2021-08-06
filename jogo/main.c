@@ -46,7 +46,7 @@ void menu(ALLEGRO_BITMAP *capa, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* tema, ALLEGR
     al_draw_bitmap(capa,0,0,0);
     if (fmod(al_get_time(), 2) < 1.0)
     {
-        al_draw_textf(font, al_map_rgb(255, 255, 255), 640/2, 480/2, ALLEGRO_ALIGN_CENTER, "Press Enter");
+        al_draw_textf(font, al_map_rgb(255, 255, 255), 400, 480/2, ALLEGRO_ALIGN_CENTER, "Pressione Enter");
     }
     al_play_sample(tema,1,1,1, ALLEGRO_PLAYMODE_LOOP, NULL);
     al_flip_display();
@@ -55,6 +55,10 @@ void menu(ALLEGRO_BITMAP *capa, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* tema, ALLEGR
         {
          *game_state = 1;
         }
+         else if (al_key_down(&ks, ALLEGRO_KEY_ESCAPE))
+         {
+             *game_state = 2;
+         }
 }
 
 void jogo()
@@ -143,6 +147,10 @@ int main(int argc, char **argv)
         {
             jogo();
             redraw = false;
+        }
+        else if (redraw && game_state == 2 && al_is_event_queue_empty(queue))
+        {
+            break;
         }
     }
     al_destroy_bitmap(capa);
