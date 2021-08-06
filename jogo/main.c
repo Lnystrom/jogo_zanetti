@@ -51,15 +51,14 @@ void menu(ALLEGRO_BITMAP *capa, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* tema, ALLEGR
     al_play_sample(tema,1,1,1, ALLEGRO_PLAYMODE_LOOP, NULL);
     al_flip_display();
     al_get_keyboard_state(&ks);
-    if (al_key_down(&ks, ALLEGRO_KEY_ENTER))
-    {
-        *game_state = 1;
-    }
-    else if (al_key_down(&ks, ALLEGRO_KEY_ESCAPE))
-    {
-         *game_state = 2;
-    }
-
+     if (al_key_down(&ks, ALLEGRO_KEY_ENTER))
+        {
+         *game_state = 1;
+        }
+         else if (al_key_down(&ks, ALLEGRO_KEY_ESCAPE))
+         {
+             *game_state = 2;
+         }
 }
 
 void jogo()
@@ -120,7 +119,6 @@ int main(int argc, char **argv)
 
     int game_state = 0;
 
-
     while(1)
     {
         al_wait_for_event(queue, &event);
@@ -132,7 +130,7 @@ int main(int argc, char **argv)
             redraw = true;
             break;
 
-        case ALLEGRO_EVENT_KEY_DOWN:
+        case ALLEGRO_EVENT_KEY_CHAR:
             if(event.keyboard.keycode != ALLEGRO_KEY_ESCAPE)
                 break;
 

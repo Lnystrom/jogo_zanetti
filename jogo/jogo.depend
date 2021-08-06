@@ -241,7 +241,7 @@
 	"allegro5/allegro.h"
 	"allegro5/allegro_audio.h"
 
-1628260029 source:c:\users\rafael\jogo_zanetti\jogo\main.c
+1628260813 source:c:\users\rafael\jogo_zanetti\jogo\main.c
 	<stdio.h>
 	<math.h>
 	<allegro5/allegro5.h>
