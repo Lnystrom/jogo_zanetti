@@ -6,6 +6,8 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_primitives.h>
+
 
 void *__gxx_personality_v0 = 0;
 void *_Unwind_Resume = 0;
@@ -49,21 +51,26 @@ void menu(ALLEGRO_BITMAP *capa, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* tema, ALLEGR
         al_draw_textf(font, al_map_rgb(255, 255, 255), 400, 480/2, ALLEGRO_ALIGN_CENTER, "Pressione Enter");
     }
     al_play_sample(tema,1,1,1, ALLEGRO_PLAYMODE_LOOP, NULL);
-    al_flip_display();
     al_get_keyboard_state(&ks);
-     if (al_key_down(&ks, ALLEGRO_KEY_ENTER))
-        {
-         *game_state = 1;
-        }
-         else if (al_key_down(&ks, ALLEGRO_KEY_ESCAPE))
-         {
-             *game_state = 2;
-         }
+    if (al_key_down(&ks, ALLEGRO_KEY_ENTER))
+    {
+        *game_state = 1;
+    }
+    /*else if (al_key_down(&ks, ALLEGRO_KEY_ESCAPE))
+    {
+        *game_state = 2;
+    }
+    */
 }
 
-void jogo()
+void jogo(ALLEGRO_SAMPLE* tema, float x, float y)
 {
-    printf("batata");
+
+    al_destroy_sample(tema);
+    al_clear_to_color(al_map_rgb(0,0,0));
+
+    al_draw_filled_rectangle(x, y, x + 30, y + 30, al_map_rgb(255,255,0));
+
 }
 
 int main(int argc, char **argv)
@@ -85,6 +92,9 @@ int main(int argc, char **argv)
     funfa(disp, "display");
     al_set_window_position(disp, 200, 200);
     al_set_window_title(disp, "O bêbado e o equilibrista");
+
+    al_init_primitives_addon();
+
 
     al_init_font_addon();
     al_init_ttf_addon();
@@ -119,24 +129,55 @@ int main(int argc, char **argv)
 
     int game_state = 0;
 
-    while(1)
+    float mov_x = 100;
+    float mov_y = 100;
+
+    bool done = false;
+
+#define KEY_SEEN     1
+#define KEY_RELEASED 2
+
+    unsigned char key[ALLEGRO_KEY_MAX];
+    memset(key, 0, sizeof(key));
+
+    while(!done)
     {
         al_wait_for_event(queue, &event);
 
         switch(event.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            // game logic goes here.
-            redraw = true;
-            break;
+            if(key[ALLEGRO_KEY_UP])
+                mov_y--;
+            if(key[ALLEGRO_KEY_DOWN])
+                mov_y++;
+            if(key[ALLEGRO_KEY_LEFT])
+                mov_x--;
+            if(key[ALLEGRO_KEY_RIGHT])
+                mov_x++;
 
-        case ALLEGRO_EVENT_KEY_CHAR:
-            if(event.keyboard.keycode != ALLEGRO_KEY_ESCAPE)
-                break;
+            if(key[ALLEGRO_KEY_ESCAPE])
+                done = true;
+
+            for(int i = 0; i < ALLEGRO_KEY_MAX; i++)
+                key[i] &= KEY_SEEN;
+
+        redraw = true;
+        break;
+
+
+        case ALLEGRO_EVENT_KEY_DOWN:
+            key[event.keyboard.keycode] = KEY_SEEN | KEY_RELEASED;
+            break;
+        case ALLEGRO_EVENT_KEY_UP:
+            key[event.keyboard.keycode] &= KEY_RELEASED;
+            break;
 
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            done = true;
             break;
         }
+
 
         if(redraw && game_state == 0 && al_is_event_queue_empty(queue))
         {
@@ -145,13 +186,15 @@ int main(int argc, char **argv)
         }
         else if(redraw && game_state == 1 && al_is_event_queue_empty(queue))
         {
-            jogo();
+            jogo(tema, mov_x, mov_y);
             redraw = false;
         }
-        else if (redraw && game_state == 2 && al_is_event_queue_empty(queue))
+       /* else if (redraw && game_state == 2 && al_is_event_queue_empty(queue))
         {
             break;
         }
+        */
+        al_flip_display();
     }
     al_destroy_bitmap(capa);
     al_destroy_font(font);
