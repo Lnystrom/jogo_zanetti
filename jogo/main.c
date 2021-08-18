@@ -27,7 +27,7 @@ void tela_de_carregamento()
         {
             printf("Erro em carregar %s\n", frame);
         }
-        al_draw_bitmap(carregamento, 300, 200, 0);
+        al_draw_bitmap(carregamento,350, 250, 0);
         al_flip_display(); //"Copies or updates the front and back buffers so that what has been drawn previously"
         al_rest(0.1);
     }
@@ -69,6 +69,13 @@ void jogo(ALLEGRO_SAMPLE* tema, float x, float y)
     al_destroy_sample(tema);
     al_clear_to_color(al_map_rgb(0,0,0));
 
+
+
+    //-----------------------------------------------------
+    ALLEGRO_BITMAP *cenario;
+    cenario = al_load_bitmap("imagens/sprites/cenario_1.png");
+    funfa(cenario, "cenario");
+    al_draw_bitmap(cenario, 0, 0, 0);
     al_draw_filled_rectangle(x, y, x + 30, y + 30, al_map_rgb(255,255,0));
 
 }
@@ -84,13 +91,13 @@ int main(int argc, char **argv)
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     funfa(queue, "queue");
 
-    int altura = 800;
-    int largura =450;
+    int largura = 1000;
+    int altura = 600;
 
     al_set_new_display_flags(ALLEGRO_FRAMELESS);
-    ALLEGRO_DISPLAY* disp = al_create_display(altura, largura);
+    ALLEGRO_DISPLAY* disp = al_create_display(largura, altura);
     funfa(disp, "display");
-    al_set_window_position(disp, 200, 200);
+    al_set_window_position(disp, 100, 100);
     al_set_window_title(disp, "O bêbado e o equilibrista");
 
     al_init_primitives_addon();
@@ -103,7 +110,7 @@ int main(int argc, char **argv)
     funfa(font, "font");
 
     funfa(al_init_image_addon(), "image addon");
-    ALLEGRO_BITMAP *capa = al_load_bitmap("imagens/landscape.bmp");
+    ALLEGRO_BITMAP *capa = al_load_bitmap("imagens/sprites/landscape.bmp");
     funfa(capa, "capa");
 
     al_register_event_source(queue, al_get_keyboard_event_source());
@@ -130,7 +137,7 @@ int main(int argc, char **argv)
     int game_state = 0;
 
     float mov_x = 100;
-    float mov_y = 100;
+    float mov_y = 400;
 
     bool done = false;
 
