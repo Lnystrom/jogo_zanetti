@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1629322567 source:c:\users\leury\jogo_zanetti\jogo\main.c
+1629502066 source:c:\users\leury\jogo_zanetti\jogo\main.c
 	<stdio.h>
 	<math.h>
 	<allegro5/allegro5.h>
