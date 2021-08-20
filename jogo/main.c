@@ -55,6 +55,7 @@ void menu(ALLEGRO_BITMAP *capa, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* tema, ALLEGR
     if (al_key_down(&ks, ALLEGRO_KEY_ENTER))
     {
         *game_state = 1;
+        al_destroy_sample(tema);
     }
     /*else if (al_key_down(&ks, ALLEGRO_KEY_ESCAPE))
     {
@@ -63,18 +64,13 @@ void menu(ALLEGRO_BITMAP *capa, ALLEGRO_FONT* font, ALLEGRO_SAMPLE* tema, ALLEGR
     */
 }
 
-void jogo(ALLEGRO_SAMPLE* tema, float x, float y)
+void jogo(ALLEGRO_SAMPLE* tema, float x, float y, ALLEGRO_BITMAP *cenario)
 {
-
-    al_destroy_sample(tema);
     al_clear_to_color(al_map_rgb(0,0,0));
 
-
-
     //-----------------------------------------------------
-    ALLEGRO_BITMAP *cenario;
-    cenario = al_load_bitmap("imagens/sprites/cenario_1.png");
-    funfa(cenario, "cenario");
+
+
     al_draw_bitmap(cenario, 0, 0, 0);
     al_draw_filled_rectangle(x, y, x + 30, y + 30, al_map_rgb(255,255,0));
 
@@ -132,6 +128,10 @@ int main(int argc, char **argv)
     ALLEGRO_SAMPLE* tema = al_load_sample("audio/tema.wav");
     funfa(tema, "musica tema");
 
+    ALLEGRO_BITMAP *cenario;
+    cenario = al_load_bitmap("imagens/sprites/cenario_1.png");
+    funfa(cenario, "cenario");
+
     ALLEGRO_KEYBOARD_STATE ks;
 
     int game_state = 0;
@@ -162,7 +162,6 @@ int main(int argc, char **argv)
                 mov_x--;
             if(key[ALLEGRO_KEY_RIGHT])
                 mov_x++;
-
             if(key[ALLEGRO_KEY_ESCAPE])
                 done = true;
 
@@ -193,7 +192,7 @@ int main(int argc, char **argv)
         }
         else if(redraw && game_state == 1 && al_is_event_queue_empty(queue))
         {
-            jogo(tema, mov_x, mov_y);
+            jogo(tema, mov_x, mov_y, cenario);
             redraw = false;
         }
        /* else if (redraw && game_state == 2 && al_is_event_queue_empty(queue))
@@ -203,6 +202,7 @@ int main(int argc, char **argv)
         */
         al_flip_display();
     }
+
     al_destroy_bitmap(capa);
     al_destroy_font(font);
     al_destroy_display(disp);
